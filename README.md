@@ -1,5 +1,5 @@
 # Cloud Computing Laboratory
 
-Student Name:
-Student ID:
-Class:
+Student Name:Duong Thi Kieu Vy
+Student ID:234082
+Class:DH23TIN09
