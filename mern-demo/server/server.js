@@ -1,8 +1,13 @@
 require('dotenv').config(); 
 const express = require('express');
 const mongoose = require('mongoose'); 
+const cors = require('cors'); // 🟢 THÊM DÒNG NÀY: Khai báo thư viện CORS
+
 const app = express();
+
+app.use(cors()); // 🟢 THÊM DÒNG NÀY: Cho phép Frontend (port 3000) gọi API đến Backend (port 5000)
 app.use(express.json());
+
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGODB_URI)
@@ -17,7 +22,6 @@ const studentSchema = new mongoose.Schema({
 
 const Student = mongoose.model('Student', studentSchema);
 
-
 app.get('/api/hello', (req, res) => {
     res.json({ message: "Xác nhận: Backend đang hoạt động thành công!" });
 });
@@ -31,7 +35,6 @@ app.get('/api/students', async (req, res) => {
     }
 });
 
-
 app.post('/api/students', async (req, res) => {
     try {
         const newStudent = await Student.create(req.body);
@@ -40,7 +43,6 @@ app.post('/api/students', async (req, res) => {
         res.status(400).json({ message: "Lỗi khi thêm sinh viên", error });
     }
 });
-
 
 app.put('/api/students/:id', async (req, res) => {
     try {
@@ -55,7 +57,6 @@ app.put('/api/students/:id', async (req, res) => {
     }
 });
 
-
 app.delete('/api/students/:id', async (req, res) => {
     try {
         await Student.findByIdAndDelete(req.params.id);
@@ -64,9 +65,6 @@ app.delete('/api/students/:id', async (req, res) => {
         res.status(400).json({ message: "Lỗi khi xóa", error });
     }
 });
-
-
-
 
 app.listen(PORT, () => {
     console.log(`🚀 Server đang khởi chạy tại địa chỉ: http://localhost:${PORT}`);
