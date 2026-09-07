@@ -41,7 +41,7 @@ function App() {
         
         if (res.ok) {
           alert("Cập nhật sinh viên thành công!");
-          setEditId(null); // Reset lại trạng thái sau khi sửa xong
+          setEditId(null); 
         }
       } else {
         // Gửi request POST để Thêm mới
