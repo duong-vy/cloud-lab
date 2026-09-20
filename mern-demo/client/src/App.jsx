@@ -89,7 +89,7 @@ function App() {
 
   return (
     <div style={{ padding: '30px', fontFamily: 'Arial' }}>
-      <h2>🎓 HỆ THỐNG QUẢN LÝ SINH VIÊN</h2>
+      <h2>🎓 HỆ THỐNG QUẢN LÝ SINH VIÊN - Phiên Bản 2.0</h2>
 
       {/* Form Nhập liệu */}
       <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
