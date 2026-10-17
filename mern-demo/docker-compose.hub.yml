@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   backend:
     image: duongkieuvy/mern-backend:1.0

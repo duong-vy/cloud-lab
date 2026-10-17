@@ -4,13 +4,12 @@ function App() {
   const [students, setStudents] = useState([]);
   const [formData, setFormData] = useState({ studentId: '', name: '', email: '' });
   
-  // Trạng thái lưu ID của sinh viên đang được sửa (Nếu null là đang thêm mới)
   const [editId, setEditId] = useState(null);
 
-  // CÂU 47: Lấy danh sách (GET)
   const fetchStudents = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/students'); 
+      // Đã sửa đường dẫn
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/students`); 
       const data = await res.json();
       setStudents(data);
     } catch (error) {
@@ -22,18 +21,16 @@ function App() {
     fetchStudents();
   }, []);
 
-  // CÂU 48: Xử lý thay đổi dữ liệu form
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // CÂU 49 & SỬA: Xử lý Gửi dữ liệu (POST hoặc PUT)
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     try {
       if (editId) {
-        // Gửi request PUT để Cập nhật
-        const res = await fetch(`http://localhost:5000/api/students/${editId}`, {
+        // Đã sửa đường dẫn
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/students/${editId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -44,8 +41,8 @@ function App() {
           setEditId(null); 
         }
       } else {
-        // Gửi request POST để Thêm mới
-        const res = await fetch('http://localhost:5000/api/students', {
+        // Đã sửa đường dẫn
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/students`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -56,7 +53,6 @@ function App() {
         }
       }
 
-      // Làm mới danh sách và xóa form
       fetchStudents(); 
       setFormData({ studentId: '', name: '', email: '' }); 
     } catch (error) {
@@ -64,12 +60,12 @@ function App() {
     }
   };
 
-  // CHỨC NĂNG XÓA (DELETE)
   const handleDelete = async (id) => {
     if (!window.confirm("Bạn có chắc chắn muốn xóa sinh viên này không?")) return;
     
     try {
-      const res = await fetch(`http://localhost:5000/api/students/${id}`, {
+      // Đã sửa đường dẫn
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/students/${id}`, {
         method: 'DELETE'
       });
       if (res.ok) {
@@ -81,7 +77,6 @@ function App() {
     }
   };
 
-  // CHUẨN BỊ DỮ LIỆU ĐỂ SỬA
   const handleEdit = (sv) => {
     setFormData({ studentId: sv.studentId, name: sv.name, email: sv.email });
     setEditId(sv._id); 

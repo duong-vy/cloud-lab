@@ -1,11 +1,28 @@
 require('dotenv').config(); 
 const express = require('express');
 const mongoose = require('mongoose'); 
-const cors = require('cors'); // 🟢 THÊM DÒNG NÀY: Khai báo thư viện CORS
+const cors = require('cors');
 
 const app = express();
 
-app.use(cors()); // 🟢 THÊM DÒNG NÀY: Cho phép Frontend (port 3000) gọi API đến Backend (port 5000)
+// 🟢 Cấu hình CORS linh hoạt cho Production
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+      callback(null, true);
+    } else {
+      callback(null, true); // Hoặc truyền origin cụ thể
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
